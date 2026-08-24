@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عراق لايف - مشاهدة مباريات كرة القدم بث مباشر</title>
+    <meta name="description" content="موقع عراق لايف لمشاهدة مباريات كرة القدم اليوم بث مباشر بدون تقطيع، الدوري العراقي الممتاز، البطولات العربية والأوروبية.">
+    
+    <!-- Google Fonts: Cairo & Readex Pro -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Navigation Bar -->
+    <header class="main-header">
+        <div class="header-container">
+            <!-- Secret Trigger on Brand Logo: Triple Click or Click Logo Icon -->
+            <a href="index.html" class="brand-logo" id="brandLogo" title="عراق لايف">
+                <div class="logo-icon" id="secretLogoTrigger">
+                    <i class="fa-solid fa-futbol"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>عراق <span>لايف</span></h1>
+                    <span class="logo-tagline">IRAQ LIVE FOOTBALL</span>
+                </div>
+            </a>
+
+            <div class="header-stats">
+                <div class="stat-badge live-pulse">
+                    <span class="pulse-dot"></span>
+                    <span class="stat-text"><strong id="liveMatchesCount">0</strong> مباراة مباشرة الآن</span>
+                </div>
+            </div>
+
+            <!-- Removed Public Admin Button from Header -->
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="main-container">
+
+        <!-- Hero Featured Match Banner -->
+        <section class="hero-featured" id="heroFeaturedSection">
+            <!-- Dynamic Featured Match Content -->
+        </section>
+
+        <!-- Filter & Search Section -->
+        <section class="controls-section">
+            <div class="filter-tabs" id="filterTabs">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fa-solid fa-border-all"></i> جميع المباريات
+                </button>
+                <button class="filter-btn live-filter" data-filter="live">
+                    <span class="pulse-dot"></span> مباشر الآن
+                </button>
+                <button class="filter-btn" data-filter="today">
+                    <i class="fa-regular fa-calendar-check"></i> مباريات اليوم
+                </button>
+                <button class="filter-btn" data-filter="upcoming">
+                    <i class="fa-regular fa-clock"></i> قادماً
+                </button>
+                <button class="filter-btn" data-filter="finished">
+                    <i class="fa-solid fa-flag-checkered"></i> انتهت
+                </button>
+            </div>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="ابحث عن فريق، بطولة، أو معلق...">
+            </div>
+        </section>
+
+        <!-- Match List / Grid Container -->
+        <section class="matches-section">
+            <div class="section-title">
+                <h2><i class="fa-solid fa-trophy gold-icon"></i> جدول المباريات</h2>
+                <span class="matches-count-label" id="matchesCountLabel">جاري التحميل...</span>
+            </div>
+
+            <div class="matches-grid" id="matchesGrid">
+                <!-- Dynamic Match Cards -->
+            </div>
+
+            <div class="empty-state hidden" id="emptyState">
+                <i class="fa-solid fa-calendar-xmark"></i>
+                <h3>لا توجد مباريات مطابقة للبحث حالياً</h3>
+                <p>يرجى تغيير التصفية أو البحث عن فريق آخر</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>عراق <span>لايف</span></h3>
+                <p>منصتك الأولى لمتابعة جديد مباريات كرة القدم والبث المباشر بأفضل جودة بدون تقطيع.</p>
+            </div>
+            <div class="footer-copy">
+                <p>&copy; 2026 جميع الحقوق محفوظة لموقع <strong>عراق لايف IRAQ LIVE</strong><span id="secretFooterDot" style="cursor:pointer; opacity:0.6;">.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Secret Admin Password Modal (Triggers via key shortcut 0000, logo click, or secret dot) -->
+    <div class="modal-overlay hidden" id="adminLoginModal">
+        <div class="modal-card login-modal-card">
+            <div class="modal-header">
+                <h3><i class="fa-solid fa-user-shield gold-icon"></i> الدخول لوحة الأدمن</h3>
+                <button class="modal-close-btn" id="closeAdminLoginModal">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="lock-avatar">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <p class="login-instruction">أدخل الرقم السري للوصول للوحة التحكم وإدارة المباريات والنتائج</p>
+
+                <form id="adminLoginForm">
+                    <div class="pin-input-group">
+                        <input type="password" id="adminPinInput" maxlength="6" placeholder="أدخل الرقم السري" autocomplete="off" autofocus>
+                        <button type="submit" class="btn-gold-submit">
+                            دخول <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="error-msg hidden" id="adminLoginError">
+                        <i class="fa-solid fa-triangle-exclamation"></i> الرقم السري غير صحيح! حاول مجدداً.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard Drawer Panel -->
+    <div class="admin-panel-drawer hidden" id="adminPanel">
+        <div class="admin-panel-header">
+            <div class="admin-title">
+                <h2><i class="fa-solid fa-sliders gold-icon"></i> لوحة تحكم المباريات - <span>عراق لايف</span></h2>
+                <span class="admin-status-badge"><i class="fa-solid fa-check-circle"></i> تم تسجيل الدخول بأمان</span>
+            </div>
+            <div class="admin-actions">
+                <button class="btn-reset-data" id="resetDataBtn" title="استعادة المباريات الافتراضية">
+                    <i class="fa-solid fa-rotate-left"></i> استعادة المباريات المبدئية
+                </button>
+                <button class="btn-close-admin" id="closeAdminPanelBtn">
+                    إغلاق اللوحة <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="admin-panel-content">
+            <!-- Form Card for Add / Edit Match -->
+            <div class="admin-card form-card">
+                <div class="admin-card-header">
+                    <h3 id="formTitle"><i class="fa-solid fa-plus-circle gold-icon"></i> إضافة مباراة جديدة</h3>
+                    <button class="btn-cancel-edit hidden" id="cancelEditBtn"><i class="fa-solid fa-xmark"></i> إلغاء التعديل</button>
+                </div>
+                
+                <form id="matchForm" class="match-form">
+                    <input type="hidden" id="matchIdInput">
+
+                    <div class="form-grid">
+                        <div class="form-group span-2">
+                            <label for="tournamentInput"><i class="fa-solid fa-trophy"></i> البطولة / الدوري</label>
+                            <input type="text" id="tournamentInput" placeholder="مثال: الدوري العراقي الممتاز، دوري أبطال آسيا..." required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="team1Input"><i class="fa-solid fa-shield"></i> الفريق الأول (المستضيف)</label>
+                            <input type="text" id="team1Input" placeholder="مثال: القوة الجوية" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="logoFile1Input"><i class="fa-solid fa-upload"></i> اختر شعار الفريق الأول من جهازك</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="logoFile1Input" accept="image/*" class="file-input-hidden">
+                                <label for="logoFile1Input" class="btn-file-select">
+                                    <i class="fa-solid fa-image"></i> اختر صورة من الجهاز
+                                </label>
+                                <div class="logo-preview-box" id="logo1Preview">
+                                    <span>لا توجد صورة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="team2Input"><i class="fa-solid fa-shield"></i> الفريق الثاني (الضيف)</label>
+                            <input type="text" id="team2Input" placeholder="مثال: الشرطة" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="logoFile2Input"><i class="fa-solid fa-upload"></i> اختر شعار الفريق الثاني من جهازك</label>
+                            <div class="file-upload-wrapper">
+                                <input type="file" id="logoFile2Input" accept="image/*" class="file-input-hidden">
+                                <label for="logoFile2Input" class="btn-file-select">
+                                    <i class="fa-solid fa-image"></i> اختر صورة من الجهاز
+                                </label>
+                                <div class="logo-preview-box" id="logo2Preview">
+                                    <span>لا توجد صورة</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="statusInput"><i class="fa-solid fa-signal"></i> حالة المباراة</label>
+                            <select id="statusInput" required>
+                                <option value="live">مباشر الآن 🔴</option>
+                                <option value="upcoming">قادماً / لم تبدأ ⏳</option>
+                                <option value="finished">انتهت 🏁</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label><i class="fa-solid fa-calculator"></i> نتيجة المباراة (التحكم بزر الزائد والناقص)</label>
+                            <div class="form-score-controller">
+                                <div class="score-team-box">
+                                    <span class="score-team-title" id="formTeam1Name">الفريق الأول</span>
+                                    <div class="counter-control">
+                                        <button type="button" class="btn-counter" id="formScore1Minus"><i class="fa-solid fa-minus"></i></button>
+                                        <input type="number" id="score1Input" value="0" min="0" readonly>
+                                        <button type="button" class="btn-counter btn-plus" id="formScore1Plus"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                </div>
+
+                                <div class="score-vs-divider">VS</div>
+
+                                <div class="score-team-box">
+                                    <span class="score-team-title" id="formTeam2Name">الفريق الثاني</span>
+                                    <div class="counter-control">
+                                        <button type="button" class="btn-counter" id="formScore2Minus"><i class="fa-solid fa-minus"></i></button>
+                                        <input type="number" id="score2Input" value="0" min="0" readonly>
+                                        <button type="button" class="btn-counter btn-plus" id="formScore2Plus"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="matchTimeInput"><i class="fa-regular fa-clock"></i> توقيت المباراة</label>
+                            <input type="text" id="matchTimeInput" placeholder="مثال: 08:30 مساءً / اليوم" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="channelInput"><i class="fa-solid fa-tv"></i> القناة الناقلة</label>
+                            <input type="text" id="channelInput" placeholder="مثال: الرابعة العراقية HD" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="commentatorInput"><i class="fa-solid fa-microphone"></i> المعلق</label>
+                            <input type="text" id="commentatorInput" placeholder="مثال: علي لفته" required>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="streamLinkInput"><i class="fa-solid fa-video"></i> رابط البث المباشر الرئيسي (رابط video / iframe / YouTube)</label>
+                            <textarea id="streamLinkInput" rows="2" placeholder="ضع رابط الفيديو أو كود Embed iFrame للبث هنا..."></textarea>
+                        </div>
+
+                        <div class="form-group span-2">
+                            <label for="streamLink2Input"><i class="fa-solid fa-server"></i> رابط سيرفر البث الثاني (اختياري)</label>
+                            <input type="text" id="streamLink2Input" placeholder="رابط سيرفر احتياطي...">
+                        </div>
+
+                        <div class="form-group span-2 checkbox-group">
+                            <label class="custom-checkbox">
+                                <input type="checkbox" id="isFeaturedInput">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-text"><i class="fa-solid fa-star gold-icon"></i> تثبيت المباراة كمباراة القمة في أعلى الصفحة (Hero Banner)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save-match" id="saveMatchBtn">
+                            <i class="fa-solid fa-floppy-disk"></i> حفظ المباراة
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Existing Matches Table -->
+            <div class="admin-card table-card">
+                <div class="admin-card-header">
+                    <h3><i class="fa-solid fa-list-check gold-icon"></i> قائمة المباريات المضافة (تحديث النتيجة فوراً بأزرار + و -)</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="admin-matches-table">
+                        <thead>
+                            <tr>
+                                <th>المباراة والتعديل السريع للنتيجة (+ / -)</th>
+                                <th>البطولة</th>
+                                <th>الحالة</th>
+                                <th>التوقيت</th>
+                                <th>القناة والمعلق</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminMatchesTableBody">
+                            <!-- Dynamic Rows -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Bundle -->
+    <script src="app.js"></script>
+</body>
+</html>
