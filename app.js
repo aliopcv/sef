@@ -6,94 +6,8 @@
 (function () {
     'use strict';
 
-    // Initial Sample Matches
-    const DEFAULT_MATCHES = [
-        {
-            id: 'match-1',
-            tournament: 'الدوري العراقي الممتاز 🇮🇶',
-            team1: 'القوة الجوية',
-            logo1: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Al-Quwa_Al-Jawiya_logo.png/220px-Al-Quwa_Al-Jawiya_logo.png',
-            team2: 'الشرطة',
-            logo2: 'https://upload.wikimedia.org/wikipedia/en/thumb/e/e0/Al-Shorta_SC_logo.png/220px-Al-Shorta_SC_logo.png',
-            status: 'live',
-            score1: 2,
-            score2: 1,
-            matchTime: '72\' (الشوط الثاني)',
-            channel: 'الرابعة العراقية الرياضية HD',
-            commentator: 'علي لفته',
-            streamLink: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/live_stream?channel=UC4R8DWoMoI7CAwX8_LjQHig" allowfullscreen></iframe>',
-            streamLink2: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-            isFeatured: true
-        },
-        {
-            id: 'match-2',
-            tournament: 'تصفيات كأس العالم 🏆',
-            team1: 'العراق 🇮🇶',
-            logo1: '',
-            team2: 'اليابان 🇯🇵',
-            logo2: '',
-            status: 'upcoming',
-            score1: 0,
-            score2: 0,
-            matchTime: 'اليوم - 09:00 مساءً',
-            channel: 'الكأس HD 1 / beIN Sports 1',
-            commentator: 'حفيظ دراجي',
-            streamLink: 'https://www.youtube.com/embed/live_demo',
-            streamLink2: '',
-            isFeatured: false
-        },
-        {
-            id: 'match-3',
-            tournament: 'الدوري الإسباني - الكلاسيكو 🇪🇸',
-            team1: 'ريال مدريد',
-            logo1: '',
-            team2: 'برشلونة',
-            logo2: '',
-            status: 'live',
-            score1: 1,
-            score2: 0,
-            matchTime: '38\' (الشوط الأول)',
-            channel: 'beIN Sports HD 1 Premium',
-            commentator: 'عصام الشوالي',
-            streamLink: '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>',
-            streamLink2: '',
-            isFeatured: false
-        },
-        {
-            id: 'match-4',
-            tournament: 'الدوري العراقي الممتاز 🇮🇶',
-            team1: 'الزوراء',
-            logo1: '',
-            team2: 'أربيل',
-            logo2: '',
-            status: 'today',
-            score1: 0,
-            score2: 0,
-            matchTime: 'اليوم - 06:30 مساءً',
-            channel: 'العراقية الرياضية HD',
-            commentator: 'رعد ناهي',
-            streamLink: '',
-            streamLink2: '',
-            isFeatured: false
-        },
-        {
-            id: 'match-5',
-            tournament: 'دوري أبطال أوروبا 🇪🇺',
-            team1: 'باريس سان جيرمان',
-            logo1: '',
-            team2: 'مانشستر سيتي',
-            logo2: '',
-            status: 'finished',
-            score1: 3,
-            score2: 2,
-            matchTime: 'انتهت المبارة (كاملة)',
-            channel: 'beIN Sports HD 2',
-            commentator: 'خليل البلوشي',
-            streamLink: '',
-            streamLink2: '',
-            isFeatured: false
-        }
-    ];
+    // Initial Sample Matches (Empty by default as requested)
+    const DEFAULT_MATCHES = [];
 
     const STORAGE_KEY = 'iraq_live_matches_data';
     const ADMIN_PASSCODE = '0000';
@@ -186,14 +100,15 @@
             if (stored) {
                 matches = JSON.parse(stored);
             } else {
-                matches = [...DEFAULT_MATCHES];
+                matches = [];
                 saveMatches();
             }
         } catch (err) {
             console.error('Error loading matches:', err);
-            matches = [...DEFAULT_MATCHES];
+            matches = [];
         }
     }
+
 
     function saveMatches() {
         try {
@@ -204,14 +119,15 @@
     }
 
     function resetToDefaultMatches() {
-        if (confirm('هل أنت تأكد من استعادة قائمة المباريات المبدئية؟')) {
-            matches = JSON.parse(JSON.stringify(DEFAULT_MATCHES));
+        if (confirm('هل أنت تأكد من إزالة وتصفير جميع المباريات من الموقع؟')) {
+            matches = [];
             saveMatches();
             refreshCurrentPage();
             renderAdminTable();
-            alert('تم استعادة المباريات المبدئية بنجاح!');
+            alert('تم إزالة وتصفير جميع المباريات من الموقع بنجاح!');
         }
     }
+
 
     function refreshCurrentPage() {
         if (isWatchPage) {
@@ -291,7 +207,12 @@
     }
 
     function renderHeroBanner(match) {
-        if (!el.heroFeaturedSection || !match) return;
+        if (!el.heroFeaturedSection) return;
+        if (!match || matches.length === 0) {
+            el.heroFeaturedSection.innerHTML = '';
+            return;
+        }
+
 
         const scoreDisplay = formatMatchScore(match);
         const logo1HTML = getTeamLogoHTML(match.logo1, match.team1);
